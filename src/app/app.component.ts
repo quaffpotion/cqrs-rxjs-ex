@@ -1,6 +1,13 @@
 import { Component, AfterViewInit, OnInit } from "@angular/core";
 import { fromEvent, of, interval, merge, Subject } from "rxjs";
-import { scan, mapTo, startWith, pluck, shareReplay } from "rxjs/operators";
+import {
+  scan,
+  mapTo,
+  startWith,
+  pluck,
+  shareReplay,
+  distinctUntilChanged
+} from "rxjs/operators";
 
 @Component({
   selector: "app-root",
@@ -17,8 +24,20 @@ export class AppComponent implements OnInit {
   commands$;
   state$;
   direction$;
+  direction2$;
+  query;
 
   ngOnInit() {
+    //Utility Operators
+    //We want to pluck properties from an object and only emit if distinct
+    function query(name) {
+      function queryprop(ob) {
+        return ob.pipe(pluck(name), distinctUntilChanged());
+      }
+      return queryprop;
+    }
+    this.query = query;
+
     //Getting items from the DOM
     this.up = document.querySelector("#up");
     this.down = document.querySelector("#down");
@@ -53,5 +72,9 @@ export class AppComponent implements OnInit {
 
     //Derived property observables
     this.direction$ = this.state$.pipe(pluck("direction"));
+    this.direction2$ = this.state$.pipe(this.query("direction"));
   }
+  //   this.query = property => ob$ =>
+  //     ob$.pipe(pluck(property), distinctUntilChanged());
+  // }
 }
