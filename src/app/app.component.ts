@@ -74,7 +74,4 @@ export class AppComponent implements OnInit {
     this.direction$ = this.state$.pipe(pluck("direction"));
     this.direction2$ = this.state$.pipe(this.query("direction"));
   }
-  //   this.query = property => ob$ =>
-  //     ob$.pipe(pluck(property), distinctUntilChanged());
-  // }
 }

@@ -1,5 +1,6 @@
 #Todo
 - [x] Basic state management
+    - [x] Add inner component that receives state
 - [x] Add query custom pipe to get parts of state
 - [ ] Add programmatic commands (e.g. timer)
 - [ ] feature1: Implement a timer that cannot be walked up by alteranting between start and stop
